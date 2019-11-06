@@ -7,6 +7,7 @@ var https = require('https')
 const request = require('request');
 const app = express()
 const router = express.Router()
+const cors = require('cors');
 var Stream = require('stream').Transform
 
 const port 	   = process.env.PORT || 8080;
@@ -214,6 +215,12 @@ router.get('/download_audio/:audioname', (req, res) => {
   
   });
 
+/*
+app.head('/*', cors(), (req, res) => {
+});
+*/
+
+app.use(cors());
 
 app.use('/', router)
 
