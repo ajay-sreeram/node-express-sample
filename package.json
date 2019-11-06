@@ -10,6 +10,7 @@
   "author": "Ajay Sreeram",  
   "dependencies": {
     "express": "4.15.3",
-    "file-type": "5.2.0"
+    "file-type": "5.2.0",
+    "request": "2.88.0"
   }
 }
