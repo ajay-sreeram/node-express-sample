@@ -123,14 +123,17 @@ router.get('/sample_audio/:audioname', (req, res) => {
       };
       
       var http_req = https.request(options, function(http_res) {      
-        //http_res.setEncoding('utf8');
-        var data = new Stream();
+        
+        //var data = new Stream();
+        res.writeHead(200, {'Content-Type': 'application/ogg',
+                            'Transfer-Encoding': 'chunked' })     
         http_res.on('data', function (chunk) {
-          data.push(chunk);    
+          //data.push(chunk);    
+          res.write(chunk);
         });
-        http_res.on('end', function (chunk) {
-          res.writeHead(200, {'Content-Type': 'application/ogg' })        
-          res.end(data.read(), 'binary')   
+        http_res.on('end', function (chunk) {             
+          //res.end(data.read(), 'binary')   
+          res.end()
         });
   
       });
@@ -157,14 +160,16 @@ router.get('/download_audio/:audioname', (req, res) => {
       };
       
       var http_req = https.request(options, function(http_res) {      
-        //http_res.setEncoding('utf8');
-        var data = new Stream();
+        //var data = new Stream();
+        res.writeHead(200, {'Content-Type': 'application/ogg',
+                            'Transfer-Encoding': 'chunked' })     
         http_res.on('data', function (chunk) {
-          data.push(chunk);    
+          //data.push(chunk);    
+          res.write(chunk);
         });
-        http_res.on('end', function (chunk) {
-          res.writeHead(200, {'Content-Type': 'application/ogg' })        
-          res.end(data.read(), 'binary')   
+        http_res.on('end', function (chunk) {             
+          //res.end(data.read(), 'binary')   
+          res.end()
         });
   
       });
