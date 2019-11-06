@@ -4,11 +4,15 @@ const express = require('express')
 const fileType = require('file-type')
 const fs = require('fs')
 var https = require('https')
+const request = require('request');
 const app = express()
 const router = express.Router()
 var Stream = require('stream').Transform
 
 const port 	   = process.env.PORT || 8080;
+
+//request.defaults({ rejectUnauthorized: false })
+process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
 
 router.get('/images/:imagename', (req, res) => {
 
@@ -107,6 +111,20 @@ router.get('/download_image/:imagename', (req, res) => {
     http_req.end();
     
   });
+
+router.get('/sample_audio_proxy/:audioname', (req, res) => {
+    let audiopath = "https://upload.wikimedia.org/wikipedia/commons/c/c8/Example.ogg"  
+    
+    request.get(audiopath)
+    .on('error', (err) => {
+        console.log("song error: ", err)
+    })
+    .on('response', () => {        
+    })
+    .pipe(res);
+    
+    
+})
   
 router.get('/sample_audio/:audioname', (req, res) => {
     let audioname = req.params.audioname
@@ -143,6 +161,20 @@ router.get('/sample_audio/:audioname', (req, res) => {
       });
       
       http_req.end();
+  
+  });
+
+router.get('/download_audio_proxy/:audioname', (req, res) => {
+    let audioname = req.params.audioname  
+    let audiopath = 'https://previews.moonrider.xyz/'+audioname+'?v=1'
+    request.get(audiopath)
+    .on('error', (err) => {
+        console.log("proxy song error: ", err)
+    })
+    .on('response', () => {
+        
+    })
+    .pipe(res);
   
   });
 
